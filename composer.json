@@ -1,0 +1,29 @@
+{
+    "name": "pmg/assertion-grant",
+    "description": "An implemenation of the assertion authorization grant flows from RFC7521",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christopher Davis",
+            "email": "chris@pmg.com"
+        }
+    ],
+    "require": {
+        "league/oauth2-server": "^8.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "PMG\\AssertionGrant\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PMG\\AssertionGrant\\Test\\": "src/"
+        }
+    }
+}
