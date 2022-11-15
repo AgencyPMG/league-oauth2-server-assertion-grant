@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /**
- * This file is part of pmg/league-oauth2-server-jwt-bearer.
+ * This file is part of pmg/assertion-grant.
  *
  * Copyright (c) PMG <https://www.pmg.com>
  *
@@ -12,7 +12,6 @@ namespace PMG\AssertionGrant;
 
 use DateInterval;
 use League\OAuth2\Server\Grant\AbstractGrant;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -38,15 +37,14 @@ class AssertionGrant extends AbstractGrant
         return $this->assertionBackend->getGrantType();
     }
 
-	/**
+    /**
      * {@inheritdoc}
      */
     public function respondToAccessTokenRequest(
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTtl
-    ) : ResponseTypeInterface
-    {
+    ) : ResponseTypeInterface {
         return $responseType;
     }
 }

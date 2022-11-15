@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /**
- * This file is part of pmg/league-oauth2-server-jwt-bearer.
+ * This file is part of pmg/assertion-grant.
  *
  * Copyright (c) PMG <https://www.pmg.com>
  *
@@ -17,5 +17,4 @@ use League\OAuth2\Server\Exception\OAuthServerException;
  */
 class AssertionGrantException extends OAuthServerException
 {
-
 }
