@@ -15,7 +15,9 @@
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^1.9",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "laminas/laminas-diactoros": "^2.21",
+        "symfony/phpunit-bridge": "^6.1"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +26,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "PMG\\AssertionGrant\\Test\\": "src/"
+            "PMG\\AssertionGrant\\Test\\": "test/"
         }
     }
 }

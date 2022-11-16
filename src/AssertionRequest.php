@@ -57,7 +57,7 @@ final class AssertionRequest
         return $this->accessTokenTtl;
     }
 
-    public function getRequest() : ServerRequestInterface
+    public function getServerRequest() : ServerRequestInterface
     {
         return $this->request;
     }
