@@ -47,6 +47,8 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: install deps
         run: composer install --no-interaction --no-progress
+      - name: fix permissions
+        run: chmod 0600 test/Resources/*.pem
       - name: phpunit
         run: ./vendor/bin/phpunit --coverage-text
 
