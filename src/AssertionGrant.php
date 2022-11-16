@@ -54,9 +54,8 @@ class AssertionGrant extends AbstractGrant
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTtl
-    ) : ResponseTypeInterface
-	{
-    	$clientId = null;
+    ) : ResponseTypeInterface {
+        $clientId = null;
         try {
             [$clientId] = $this->getClientCredentials($request);
         } catch (OAuthServerException $e) {
@@ -129,8 +128,7 @@ class AssertionGrant extends AbstractGrant
         ServerRequestInterface $request,
         ClientEntityInterface $oauthClient,
         Assertion $assertion
-    ) : array
-    {
+    ) : array {
         $allowedScopes = $assertion->getAllowedScopes();
 
         $requestScopes = $this->getRequestParameter(

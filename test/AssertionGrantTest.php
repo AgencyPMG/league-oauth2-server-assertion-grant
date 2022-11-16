@@ -17,7 +17,6 @@ use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
-use League\OAuth2\Server\Entities\Traits\ScopeTrait;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
@@ -202,7 +201,7 @@ class AssertionGrantTest extends TestCase
             ->method('getScopeEntityByIdentifier')
             ->with(self::INVALID_SCOPE)
             ->willReturn(new Scope(self::INVALID_SCOPE));
-        
+
         $this->grant->respondToAccessTokenRequest(
             $request,
             $this->responseType,

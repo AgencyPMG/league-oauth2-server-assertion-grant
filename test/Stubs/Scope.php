@@ -29,6 +29,6 @@ final class Scope implements ScopeEntityInterface
      */
     public function getIdentifier() : string
     {
-        Return $this->id;
+        return $this->id;
     }
 }
