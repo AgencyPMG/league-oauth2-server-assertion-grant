@@ -11,12 +11,9 @@
 namespace PMG\AssertionGrant\Test\Stubs;
 
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
-use League\OAuth2\Server\Entities\Traits\ScopeTrait;
 
 final class Scope implements ScopeEntityInterface
 {
-    use ScopeTrait;
-
     /**
      * @param non-empty-string $id
      */
@@ -28,6 +25,11 @@ final class Scope implements ScopeEntityInterface
      * @return non-empty-string
      */
     public function getIdentifier() : string
+    {
+        return $this->id;
+    }
+
+    public function jsonSerialize() : string
     {
         return $this->id;
     }
