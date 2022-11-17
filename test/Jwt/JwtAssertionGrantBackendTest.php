@@ -20,6 +20,7 @@ use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\RegisteredClaims;
 use PHPUnit\Framework\MockObject\MockObject;
+use PMG\AssertionGrant\Assertion;
 use PMG\AssertionGrant\AssertionRequest;
 use PMG\AssertionGrant\Jwt\AssertionRepository;
 use PMG\AssertionGrant\Jwt\AssertionKey;
@@ -430,7 +431,11 @@ class JwtAssertionGrantBackendTest extends JwtTestCase
         $assertion = $this->validAssertion();
         $key->expects($this->once())
             ->method('canIssueAccessTokenTo')
-            ->with(self::OAUTH_CLIENT_ID, self::USER_ID)
+            ->with($this->callback(function (Assertion $assertion) : bool {
+                $this->assertSame(self::OAUTH_CLIENT_ID, $assertion->getIssuer());
+                $this->assertSame(self::USER_ID, $assertion->getSubject());
+                return true;
+            }))
             ->willReturn(false);
 
         $this->backend->parseAndValidate($this->assertionRequest($assertion->toString()));
@@ -442,7 +447,11 @@ class JwtAssertionGrantBackendTest extends JwtTestCase
         $assertion = $this->validAssertion();
         $key->expects($this->once())
             ->method('canIssueAccessTokenTo')
-            ->with(self::OAUTH_CLIENT_ID, self::USER_ID)
+            ->with($this->callback(function (Assertion $assertion) : bool {
+                $this->assertSame(self::OAUTH_CLIENT_ID, $assertion->getIssuer());
+                $this->assertSame(self::USER_ID, $assertion->getSubject());
+                return true;
+            }))
             ->willReturn(true);
         $key->expects($this->once())
             ->method('getAllowedScopes')
@@ -482,7 +491,11 @@ class JwtAssertionGrantBackendTest extends JwtTestCase
         $assertion = $this->validAssertion();
         $key->expects($this->once())
             ->method('canIssueAccessTokenTo')
-            ->with(self::OAUTH_CLIENT_ID, self::USER_ID)
+            ->with($this->callback(function (Assertion $assertion) : bool {
+                $this->assertSame(self::OAUTH_CLIENT_ID, $assertion->getIssuer());
+                $this->assertSame(self::USER_ID, $assertion->getSubject());
+                return true;
+            }))
             ->willReturn(true);
         $key->expects($this->once())
             ->method('getAllowedScopes')

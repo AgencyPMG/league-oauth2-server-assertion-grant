@@ -10,6 +10,8 @@
 
 namespace PMG\AssertionGrant\Jwt;
 
+use PMG\AssertionGrant\Assertion;
+
 /**
  * This is the assertion signing key entity interface.
  */
@@ -37,12 +39,12 @@ interface AssertionKey
     public function getAllowedScopes() : array;
 
     /**
-     * This method is used to validate the `iss` (oauth client ID) and `sub`
-     * (user identifier) claims of the JWT.
+     * Can the assertion key be used to issue a token for the given assertion?
      *
-     * @param non-empty-string $issuer
-     * @param non-empty-string $subject
+     * This is used as the final validation step.
+     *
+     * @param Assertion $assertion the assertion that's already been validated
      * @return bool True if a token can be issued
      */
-    public function canIssueAccessTokenTo(string $issuer, string $subject) : bool;
+    public function canIssueAccessTokenTo(Assertion $assertion) : bool;
 }

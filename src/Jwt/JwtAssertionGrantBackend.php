@@ -103,17 +103,13 @@ final class JwtAssertionGrantBackend implements AssertionGrantBackend
         $subject = $claims->get(RegisteredClaims::SUBJECT);
         assert(is_string($subject) && $subject !== '');
 
-        if (!$key->canIssueAccessTokenTo($issuer, $subject)) {
-            throw CannotIssueAccessToken::to($key, $issuer, $subject);
-        }
-
         $expiresAt = $claims->get(RegisteredClaims::EXPIRATION_TIME);
         assert($expiresAt instanceof DateTimeImmutable);
 
         $issuedAt = $claims->get(RegisteredClaims::ISSUED_AT);
         assert(null === $issuedAt || $issuedAt instanceof DateTimeImmutable);
 
-        return new DefaultAssertion(
+        $result = new DefaultAssertion(
             $issuer,
             $subject,
             $request->getExpectedAudience(),
@@ -121,6 +117,12 @@ final class JwtAssertionGrantBackend implements AssertionGrantBackend
             $issuedAt,
             $key->getAllowedScopes()
         );
+
+        if (!$key->canIssueAccessTokenTo($result)) {
+            throw CannotIssueAccessToken::to($key, $result);
+        }
+
+        return $result;
     }
 
     /**

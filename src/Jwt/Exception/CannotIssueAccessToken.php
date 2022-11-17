@@ -10,18 +10,19 @@
 
 namespace PMG\AssertionGrant\Jwt\Exception;
 
+use PMG\AssertionGrant\Assertion;
 use PMG\AssertionGrant\Exception\InvalidAssertionException;
 use PMG\AssertionGrant\Jwt\AssertionKey;
 
 class CannotIssueAccessToken extends InvalidAssertionException
 {
-    public static function to(AssertionKey $key, string $issuer, string $subject) : self
+    public static function to(AssertionKey $key, Assertion $assertion) : self
     {
         return new self('Could not issue access token', sprintf(
             'Assertion key %s declined to issue an access token for the assertion issued by %s for subject %s',
             $key->getIdentifier(),
-            $issuer,
-            $subject,
+            $assertion->getIssuer(),
+            $assertion->getSubject()
         ));
     }
 }
