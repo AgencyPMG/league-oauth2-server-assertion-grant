@@ -49,8 +49,16 @@ than the scope originally granted to the authorized accessor.
 So somehow the assertion is made valid out of band. The assertion backend
 returns an `Assertion` implementation which has allowed scopes.
 
+If a caller tries to request scopes outside of the assertion's allowed scopes,
+an error will be returned.
+
+## Assertion Issuers
+
+Assertion issuers are treated as oauth client identifiers.
+
 ## Assertion Subjects
 
 Assertion subjects are treated as user identifiers in this library. No
 accomodations for client credentials as that would be better suited for
 the `client_credentials` grant with a `client_assertion` system.
+
