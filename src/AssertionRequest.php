@@ -11,6 +11,7 @@
 namespace PMG\AssertionGrant;
 
 use DateInterval;
+use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -29,6 +30,8 @@ final class AssertionRequest
         private DateInterval $accessTokenTtl,
         private ServerRequestInterface $request
     ) {
+        assert('' !== $assertion, new InvalidArgumentException('$assertion cannot be empty'));
+        assert('' !== $expectedAudience, new InvalidArgumentException('$expectedAudience cannot be empty'));
     }
 
     /**
