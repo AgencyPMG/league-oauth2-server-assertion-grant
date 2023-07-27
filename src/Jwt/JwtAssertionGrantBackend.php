@@ -147,7 +147,7 @@ final class JwtAssertionGrantBackend implements AssertionGrantBackend
             new HasStringClaim(RegisteredClaims::SUBJECT),
         ];
 
-        if ($request->getExpectedIssuer() !== null) {
+        if ($request->getExpectedIssuer() !== null && $request->getExpectedIssuer() !== '') {
             $constraints[] = new JwtConstraint\IssuedBy($request->getExpectedIssuer());
         } else {
             $constraints[] = new HasStringClaim(RegisteredClaims::ISSUER);
@@ -192,6 +192,8 @@ final class JwtAssertionGrantBackend implements AssertionGrantBackend
     /**
      * Pull the `assertion` parameter out of the request and parse it as the
      * JWT its meant to be.
+     *
+     * @param non-empty-string $assertion
      */
     private function parseJwtAssertion(string $assertion) : UnencryptedToken
     {

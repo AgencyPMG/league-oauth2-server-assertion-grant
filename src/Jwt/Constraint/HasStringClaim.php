@@ -10,6 +10,7 @@
 
 namespace PMG\AssertionGrant\Jwt\Constraint;
 
+use InvalidArgumentException;
 use Lcobucci\JWT\Token;
 use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint;
@@ -22,10 +23,14 @@ use Lcobucci\JWT\Validation\ConstraintViolation;
  */
 final class HasStringClaim implements Constraint
 {
+    /**
+     * @var non-empty-string
+     */
     private string $claim;
 
     public function __construct(string $claim)
     {
+        assert('' !== $claim, new InvalidArgumentException('$claim cannot be empty'));
         $this->claim = $claim;
     }
 
