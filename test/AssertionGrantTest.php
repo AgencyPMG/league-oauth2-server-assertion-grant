@@ -137,9 +137,13 @@ class AssertionGrantTest extends TestCase
     {
         $request = $this->request([
             'client_id' => self::CLIENT_ID,
-            'client_secret' => false,
+            'client_secret' => __METHOD__,
             'assertion' => self::ASSERTION,
         ]);
+        $this->clientRepository->expects($this->once())
+            ->method('validateClient')
+            ->with(self::CLIENT_ID, __METHOD__, self::GRANT_TYPE)
+            ->willReturn(false);
 
         $error = null;
         try {
@@ -153,8 +157,7 @@ class AssertionGrantTest extends TestCase
         }
 
         $this->assertInstanceOf(OAuthServerException::class, $error);
-        $this->assertNotNull($error->getHint());
-        $this->assertStringContainsString('client_secret', $error->getHint());
+        $this->assertStringContainsStringIgnoringCase('client authentication failed', $error->getMessage());
     }
 
     public function testClientIdNotInRequestUsesIssuerToLookUpClient() : void
@@ -277,7 +280,9 @@ class AssertionGrantTest extends TestCase
         $this->grant->setClientRepository($this->clientRepository);
         $this->grant->setScopeRepository($this->scopeRepository);
         $this->grant->setAccessTokenRepository($this->tokenRepository);
-        $this->grant->setPrivateKey(new CryptKey(__DIR__.'/Resources/test_key.pem'));
+        $keyPath = __DIR__.'/Resources/test_key.pem';
+        chmod($keyPath, 0600);
+        $this->grant->setPrivateKey(new CryptKey($keyPath));
         $this->responseType = $this->createMock(ResponseTypeInterface::class);
         $this->accessTokenTtl = new DateInterval('PT1H');
         $this->assertion = $this->createStub(Assertion::class);

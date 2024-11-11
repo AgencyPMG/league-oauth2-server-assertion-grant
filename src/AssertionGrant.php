@@ -60,7 +60,7 @@ class AssertionGrant extends AbstractGrant
             [$clientId] = $this->getClientCredentials($request);
         } catch (OAuthServerException $e) {
             // make client_id optional. if it's present we'll process and
-            // validated it, otherwise we'll just use the assertion
+            // validate it, otherwise we'll just use the assertion
             if ($e->getHint() === null || !str_contains($e->getHint(), 'client_id')) {
                 throw $e;
             }
@@ -114,7 +114,7 @@ class AssertionGrant extends AbstractGrant
     private function getAssertion(ServerRequestInterface $request) : string
     {
         $assertion = $this->getRequestParameter(self::PARAM_ASSERTION, $request, null);
-        if (!\is_string($assertion) || $assertion === '') {
+        if (empty($assertion)) {
             throw OAuthServerException::invalidRequest(self::PARAM_ASSERTION);
         }
 
@@ -134,7 +134,7 @@ class AssertionGrant extends AbstractGrant
         $requestScopes = $this->getRequestParameter(
             'scope',
             $request,
-            $allowedScopes, // default to the scopes associated with assertion already
+            implode(self::SCOPE_DELIMITER_STRING, $allowedScopes),
         );
 
         $scopes = $this->validateScopes($requestScopes ?? []);
