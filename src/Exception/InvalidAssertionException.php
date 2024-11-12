@@ -22,9 +22,9 @@ class InvalidAssertionException extends AssertionGrantException
 {
     public const ERROR_TYPE = 'invalid_grant';
 
-    public function __construct(string $message, ?string $hint=null, int $code=0, ?Throwable $previous=null)
+    public static function create(string $message, ?string $hint=null, int $code=0, ?Throwable $previous=null) : static
     {
-        parent::__construct(
+        return new static(
             $message,
             $code,
             self::ERROR_TYPE,

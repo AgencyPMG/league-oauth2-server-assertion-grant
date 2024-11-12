@@ -16,7 +16,7 @@ class AssertionKeyNotFound extends InvalidAssertionException
 {
     public static function with(string $keyId) : self
     {
-        return new self(sprintf(
+        return self::create(sprintf(
             'Assertion key %s not found, could not verify JSON web token signaturesignature',
             $keyId
         ), 'Check the `kid` header');

@@ -16,12 +16,12 @@ class InvalidKeyId extends InvalidAssertionException
 {
     public static function missing() : self
     {
-        return new self('The assertion does not have a `kid` header');
+        return self::create('The assertion does not have a `kid` header');
     }
 
     public static function invalidType(mixed $keyId) : self
     {
-        return new self(sprintf(
+        return self::create(sprintf(
             'The `kid` header must be a string, got `%s`',
             get_debug_type($keyId)
         ));

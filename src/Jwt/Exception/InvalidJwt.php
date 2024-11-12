@@ -17,7 +17,7 @@ class InvalidJwt extends InvalidAssertionException
 {
     public static function wrap(Throwable $cause) : self
     {
-        return new self(
+        return self::create(
             $cause->getMessage(),
             null,
             $cause->getCode(),

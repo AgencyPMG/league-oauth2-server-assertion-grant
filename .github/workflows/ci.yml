@@ -17,19 +17,16 @@ env:
 jobs:
   test:
     name: tests
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
 
     strategy:
       matrix:
         php-version:
-          - '8.2'
-        composer-flags:
-          - ''
-          - '--prefer-lowest'
+          - '8.3'
 
     steps:
       - name: Checkout
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
         with:
           fetch-depth: 2
       - name: Install PHP
@@ -42,13 +39,13 @@ jobs:
         id: composercache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composercache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: install deps
-        run: composer update --no-interaction --no-progress ${{ matrix.composer-flags }}
+        run: composer update --no-interaction --no-progress
       - name: fix permissions
         run: chmod 0600 test/Resources/*.pem
       - name: phpunit
@@ -56,7 +53,7 @@ jobs:
 
   analyze:
     name: analyze
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
 
     steps:
       - name: Checkout
@@ -64,7 +61,7 @@ jobs:
       - name: Install PHP
         uses: "shivammathur/setup-php@v2"
         with:
-          php-version: '8.2' 
+          php-version: '8.3' 
           tools: composer
           coverage: none
       - name: composer cache

@@ -18,7 +18,7 @@ class CannotIssueAccessToken extends InvalidAssertionException
 {
     public static function to(AssertionKey $key, Assertion $assertion) : self
     {
-        return new self('Could not issue access token', sprintf(
+        return self::create('Could not issue access token', sprintf(
             'Assertion key %s declined to issue an access token for the assertion issued by %s for subject %s',
             $key->getIdentifier(),
             $assertion->getIssuer(),

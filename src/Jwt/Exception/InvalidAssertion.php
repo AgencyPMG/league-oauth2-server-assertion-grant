@@ -22,7 +22,7 @@ class InvalidAssertion extends InvalidAssertionException
             $hint[] = $violation->getMessage();
         }
 
-        return new self(
+        return self::create(
             'Could not validate assertion',
             sprintf('Errors: %s', implode(', ', $hint)),
             $violations->getCode(),
@@ -32,6 +32,6 @@ class InvalidAssertion extends InvalidAssertionException
 
     public static function replay(string $assertionId) : self
     {
-        return new self(sprintf('assertion %s has already been used', $assertionId));
+        return self::create(sprintf('assertion %s has already been used', $assertionId));
     }
 }
