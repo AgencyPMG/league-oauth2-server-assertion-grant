@@ -78,7 +78,7 @@ class AssertionGrantTest extends TestCase
     /**
      * @var ClientEntityInterface&Stub
      */
-    private ClientEntityIAbstractGrantnterface $oauthClient;
+    private ClientEntityInterface $oauthClient;
 
     public function testGetIdentifierUsesGrantTypeFromAssertionBackend() : void
     {
