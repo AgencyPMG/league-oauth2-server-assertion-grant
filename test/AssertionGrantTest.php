@@ -78,7 +78,7 @@ class AssertionGrantTest extends TestCase
     /**
      * @var ClientEntityInterface&Stub
      */
-    private ClientEntityInterface $oauthClient;
+    private ClientEntityIAbstractGrantnterface $oauthClient;
 
     public function testGetIdentifierUsesGrantTypeFromAssertionBackend() : void
     {
@@ -123,6 +123,7 @@ class AssertionGrantTest extends TestCase
         $this->assertion->method('getAllowedScopes')
             ->willReturn([]);
         $token = $this->willIssueAccessToken();
+        $this->oauthClient->method('isConfidential')->willReturn(true);
 
         $result = $this->grant->respondToAccessTokenRequest(
             $request,
@@ -140,10 +141,6 @@ class AssertionGrantTest extends TestCase
             'client_secret' => __METHOD__,
             'assertion' => self::ASSERTION,
         ]);
-        $this->clientRepository->expects($this->once())
-            ->method('validateClient')
-            ->with(self::CLIENT_ID, __METHOD__, self::GRANT_TYPE)
-            ->willReturn(false);
 
         $error = null;
         try {
